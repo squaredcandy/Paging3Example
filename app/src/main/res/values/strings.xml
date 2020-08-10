@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">PagingApplication</string>
+    <string name="paging_source_generic_error">Unable to load stories</string>
+    <string name="hacker_news_item_subtitle">Posted by %s %s</string>
+    <string name="hacker_news_item_score">Score: %d</string>
+    <string name="hacker_news_item_comments">Comments: %d</string>
+
+    <string name="time_just_now">&lt; 1 hr ago</string>
+    <plurals name="time_hours_ago">
+        <item quantity="one">%d hr ago</item>
+        <item quantity="other">%d hrs ago</item>
+    </plurals>
+    <string name="time_yesterday">yesterday</string>
+    <string name="time_on_date">on %s</string>
+</resources>
