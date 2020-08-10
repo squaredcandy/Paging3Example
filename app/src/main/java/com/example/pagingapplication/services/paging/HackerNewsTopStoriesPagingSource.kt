@@ -1,11 +1,12 @@
-package com.example.pagingapplication.services.network.hackernews
+package com.example.pagingapplication.services.paging
 
 import androidx.paging.PagingSource
 import com.example.pagingapplication.model.HackerNews
 import com.example.pagingapplication.model.toHackerNewsItem
+import com.example.pagingapplication.services.network.hackernews.api.HackerNewsApi
 
 class HackerNewsTopStoriesPagingSource(
-    private val repository: HackerNewsRepository
+    private val api: HackerNewsApi
 ) : PagingSource<Int, HackerNews.Story>() {
     /**
      * Cache the indices so we can reuse the same list every time
@@ -15,7 +16,7 @@ class HackerNewsTopStoriesPagingSource(
         val page = params.key ?: 0
         val loadSize = params.loadSize
         val indices = if(indicesCache.isEmpty()) {
-            repository.getTopStoryIndices().also { indicesCache = it }
+            api.getTopStories().also { indicesCache = it }
         } else {
             indicesCache
         }
@@ -23,7 +24,7 @@ class HackerNewsTopStoriesPagingSource(
         val endIndex = (page + 1) * loadSize
 
         val indicesToLoad = indices.subList(startIndex, endIndex)
-        val items = indicesToLoad.map { repository.getItem(it) }
+        val items = indicesToLoad.map { api.getItem(it) }
         val data = items.map { it.toHackerNewsItem() as HackerNews.Story }
 
         /**

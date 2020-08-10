@@ -1,4 +1,4 @@
-package com.example.pagingapplication.main
+package com.example.pagingapplication.adapters
 
 import android.content.Context
 import android.view.View

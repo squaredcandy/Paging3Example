@@ -1,4 +1,4 @@
-package com.example.pagingapplication.services.database
+package com.example.pagingapplication.services.database.converters
 
 import androidx.room.TypeConverter
 import com.example.pagingapplication.model.ItemType

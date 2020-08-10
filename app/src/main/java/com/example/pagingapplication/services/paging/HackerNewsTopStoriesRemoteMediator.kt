@@ -1,11 +1,13 @@
-package com.example.pagingapplication.services.database.hackernews
+package com.example.pagingapplication.services.paging
 
 import android.util.Log
 import androidx.paging.*
 import androidx.room.withTransaction
-import com.example.pagingapplication.services.database.Database
+import com.example.pagingapplication.services.database.HackerNewsDatabase
 import com.example.pagingapplication.services.database.hackernews.model.HackerNewsRemoteKey
-import com.example.pagingapplication.services.network.hackernews.HackerNewsRepository
+import com.example.pagingapplication.services.database.hackernews.dao.HackerNewsDao
+import com.example.pagingapplication.services.database.hackernews.dao.HackerNewsRemoteKeysDao
+import com.example.pagingapplication.services.network.hackernews.api.HackerNewsApi
 import com.example.pagingapplication.services.network.hackernews.model.HackerNewsItemResult
 import retrofit2.HttpException
 import java.io.IOException
@@ -15,9 +17,11 @@ import java.io.IOException
  */
 @ExperimentalPagingApi
 class HackerNewsTopStoriesRemoteMediator(
-    private val repository: HackerNewsRepository,
-    private val database: Database
+    private val api: HackerNewsApi,
+    private val hackerNewsDatabase: HackerNewsDatabase
 ) : RemoteMediator<Int, HackerNewsItemResult>() {
+    private val itemDao: HackerNewsDao = hackerNewsDatabase.hackerNewsDao()
+    private val remoteKeyDao: HackerNewsRemoteKeysDao = hackerNewsDatabase.hackerNewsRemoteKeysDao()
 
     override suspend fun load(
         loadType: LoadType,
@@ -26,7 +30,7 @@ class HackerNewsTopStoriesRemoteMediator(
         /**
          * We handle the keys ourselves since the one provided in [state] is pretty poor
          */
-        val remoteKey = repository.getRemoteKey(TOP_STORIES_INDEX) ?: createNewRemoteKey()
+        val remoteKey = remoteKeyDao.getHackerNewsRemoteKey(TOP_STORIES_INDEX) ?: createNewRemoteKey()
 
         val page: Int = when(loadType) {
             /**
@@ -52,13 +56,13 @@ class HackerNewsTopStoriesRemoteMediator(
         val endIndex = (page + 1) * loadSize
 
         val itemIdsToLoad = remoteKey.itemIds.subList(startIndex, endIndex)
-        val items = itemIdsToLoad.map { repository.getItemWithCache(it) }
+        val items = itemIdsToLoad.map { itemDao.getItem(it) ?: api.getItem(it) }
         val newRemoteKey = remoteKey.copy(
             prevKey = if((page - 1) * loadSize >= 0) page - 1 else null,
             nextKey = if((page + 2) * loadSize < remoteKey.itemIds.lastIndex) page + 1 else null
         )
 
-        database.withTransaction {
+        hackerNewsDatabase.withTransaction {
             if(loadType == LoadType.REFRESH) {
                 createNewRemoteKey()
             }
@@ -68,16 +72,17 @@ class HackerNewsTopStoriesRemoteMediator(
              * The [HackerNewsDao] will pick up the changes and invalidate the [PagingSource]
              * which will then tell our [Pager] to reload with new changes
              */
-            repository.insertRemoteKey(newRemoteKey)
-            repository.insertItemsToCache(items)
+            remoteKeyDao.insertItem(newRemoteKey)
+            itemDao.insertItems(items)
         }
         items.isNotEmpty()
     }
 
     private suspend fun createNewRemoteKey(): HackerNewsRemoteKey {
-        return database.withTransaction {
-            repository.deleteAllCachedItems()
-            val itemIds = repository.getTopStoryIndices()
+        return hackerNewsDatabase.withTransaction {
+            remoteKeyDao.deleteRemoteKeys()
+            itemDao.deleteAllItems()
+            val itemIds = api.getTopStories()
 
             val key = HackerNewsRemoteKey(
                 TOP_STORIES_INDEX,
@@ -85,7 +90,7 @@ class HackerNewsTopStoriesRemoteMediator(
                 0,
                 0
             )
-            repository.insertRemoteKey(key)
+            remoteKeyDao.insertItem(key)
             key
         }
     }

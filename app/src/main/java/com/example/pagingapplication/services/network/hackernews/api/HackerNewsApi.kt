@@ -1,4 +1,4 @@
-package com.example.pagingapplication.services.network.hackernews
+package com.example.pagingapplication.services.network.hackernews.api
 
 import com.example.pagingapplication.services.network.hackernews.model.HackerNewsItemResult
 import retrofit2.http.GET

@@ -1,4 +1,4 @@
-package com.example.pagingapplication.services.database.hackernews
+package com.example.pagingapplication.services.database.hackernews.dao
 
 import androidx.paging.PagingSource
 import androidx.room.Dao

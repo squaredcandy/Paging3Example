@@ -1,4 +1,4 @@
-package com.example.pagingapplication.services.network.hackernews
+package com.example.pagingapplication.services.network.adapters
 
 import com.example.pagingapplication.model.ItemType
 import com.squareup.moshi.JsonAdapter

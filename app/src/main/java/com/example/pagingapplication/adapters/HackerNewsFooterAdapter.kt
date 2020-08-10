@@ -1,4 +1,4 @@
-package com.example.pagingapplication.main
+package com.example.pagingapplication.adapters
 
 import android.view.View
 import android.view.ViewGroup
@@ -53,8 +53,13 @@ class HackerNewsFooterAdapter(
         val view = parent.inflate(getStateViewType(loadState), false)
         return when(loadState) {
             is LoadState.NotLoading -> throw IllegalStateException()
-            LoadState.Loading -> ViewHolder.Loading(view)
-            is LoadState.Error -> ViewHolder.Error(view, retry)
+            LoadState.Loading -> ViewHolder.Loading(
+                view
+            )
+            is LoadState.Error -> ViewHolder.Error(
+                view,
+                retry
+            )
         }
     }
 }

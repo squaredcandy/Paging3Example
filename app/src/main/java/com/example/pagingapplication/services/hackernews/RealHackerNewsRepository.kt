@@ -1,8 +1,10 @@
-package com.example.pagingapplication.services
+package com.example.pagingapplication.services.hackernews
 
 import androidx.paging.Pager
 import androidx.paging.PagingData
+import androidx.paging.PagingSource
 import com.example.pagingapplication.model.HackerNews
+import com.example.pagingapplication.services.hackernews.HackerNewsRepository
 import com.example.pagingapplication.services.network.hackernews.api.HackerNewsApi
 import com.example.pagingapplication.services.paging.HackerNewsTopStoriesPagingSource
 import kotlinx.coroutines.flow.Flow
@@ -15,10 +17,6 @@ class RealHackerNewsRepository(
     override fun topStoriesFlow(): Flow<PagingData<HackerNews.Story>> = Pager(
         config = HackerNewsRepository.DEFAULT_PAGING_CONFIG
     ) {
-        /**
-         * This method gets called every time the pager data gets invalidated so don't
-         * create the [PagingSource] elsewhere and pass it in here
-         */
         /**
          * This method gets called every time the pager data gets invalidated so don't
          * create the [PagingSource] elsewhere and pass it in here

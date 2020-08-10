@@ -1,4 +1,4 @@
-package com.example.pagingapplication.services.database
+package com.example.pagingapplication.services.database.converters
 
 import androidx.room.TypeConverter
 import com.example.pagingapplication.services.network.NetworkFactory
@@ -10,13 +10,15 @@ class IntListConverter {
         @JvmStatic
         @TypeConverter
         fun fromString(value: String): List<Int> {
-            return getAdapter().fromJson(value) ?: emptyList()
+            return getAdapter()
+                .fromJson(value) ?: emptyList()
         }
 
         @JvmStatic
         @TypeConverter
         fun fromItemType(value: List<Int>): String {
-            return getAdapter().toJson(value)
+            return getAdapter()
+                .toJson(value)
         }
 
         private fun getAdapter(): JsonAdapter<List<Int>> {

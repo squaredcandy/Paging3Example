@@ -12,25 +12,25 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.pagingapplication.PagingApplication
 import com.example.pagingapplication.R
+import com.example.pagingapplication.adapters.HackerNewsAdapter
+import com.example.pagingapplication.adapters.HackerNewsFooterAdapter
 import com.example.pagingapplication.services.database.DatabaseFactory
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
-    private val adapter = HackerNewsAdapter()
-    private val footerAdapter = HackerNewsFooterAdapter {
-        adapter.retry()
-    }
+    private val adapter =
+        HackerNewsAdapter()
+    private val footerAdapter =
+        HackerNewsFooterAdapter {
+            adapter.retry()
+        }
     private val viewModel: MainViewModel by viewModels {
         MainViewModel.Factory(
-            (application as PagingApplication).serviceContainer.repository,
-            // I've seen worse ways to get the database instance
-            DatabaseFactory.getDatabase(applicationContext)
+            (application as PagingApplication).serviceContainer.repository
         )
     }
 
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
         }.launchIn(lifecycleScope)
 
-        viewModel.topStoriesDatabaseFlow.map { data ->
+        viewModel.topStoriesFlow.map { data ->
             adapter.submitData(data)
         }.launchIn(lifecycleScope)
     }

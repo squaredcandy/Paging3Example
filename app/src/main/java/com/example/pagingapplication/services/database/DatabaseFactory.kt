@@ -2,21 +2,21 @@ package com.example.pagingapplication.services.database
 
 import android.content.Context
 import androidx.room.Room
-import com.example.pagingapplication.services.database.hackernews.HackerNewsDao
-import com.example.pagingapplication.services.database.hackernews.HackerNewsRemoteKeysDao
+import com.example.pagingapplication.services.database.hackernews.dao.HackerNewsDao
+import com.example.pagingapplication.services.database.hackernews.dao.HackerNewsRemoteKeysDao
 
 object DatabaseFactory {
 
     private const val DATABASE_NAME = "database.db"
-    @Volatile private var instance: Database? = null
+    @Volatile private var instance: HackerNewsDatabase? = null
 
-    fun getDatabase(applicationContext: Context): Database {
+    fun getDatabase(applicationContext: Context): HackerNewsDatabase {
         return instance ?: synchronized(this) {
             instance ?: buildDatabase(applicationContext) .also { instance = it }
         }
     }
-    private fun buildDatabase(applicationContext: Context): Database =
-        Room.databaseBuilder(applicationContext, Database::class.java, DATABASE_NAME).build()
+    private fun buildDatabase(applicationContext: Context): HackerNewsDatabase =
+        Room.databaseBuilder(applicationContext, HackerNewsDatabase::class.java, DATABASE_NAME).build()
 
     fun getHackerNewsDao(applicationContext: Context): HackerNewsDao {
         return getDatabase(applicationContext).hackerNewsDao()
