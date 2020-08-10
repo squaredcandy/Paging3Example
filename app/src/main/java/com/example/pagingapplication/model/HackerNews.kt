@@ -1,4 +1,6 @@
-package com.example.pagingapplication.services.network.hackernews
+package com.example.pagingapplication.model
+
+import com.example.pagingapplication.services.network.hackernews.model.HackerNewsItemResult
 
 sealed class HackerNews(open val id: Int, val type: ItemType) {
     // Can also be an Ask

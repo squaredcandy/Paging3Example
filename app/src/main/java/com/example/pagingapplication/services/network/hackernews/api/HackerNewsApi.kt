@@ -1,5 +1,6 @@
 package com.example.pagingapplication.services.network.hackernews
 
+import com.example.pagingapplication.services.network.hackernews.model.HackerNewsItemResult
 import retrofit2.http.GET
 import retrofit2.http.Path
 

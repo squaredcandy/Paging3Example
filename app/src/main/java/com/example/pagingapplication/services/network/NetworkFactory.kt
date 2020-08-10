@@ -1,8 +1,7 @@
 package com.example.pagingapplication.services.network
 
 import com.example.pagingapplication.services.network.hackernews.HackerNewsApi
-import com.example.pagingapplication.services.network.hackernews.HackerNewsRepository
-import com.example.pagingapplication.services.network.hackernews.ItemType
+import com.example.pagingapplication.model.ItemType
 import com.example.pagingapplication.services.network.hackernews.ItemTypeAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -13,7 +12,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object NetworkFactory {
 
-    private val moshi = Moshi.Builder()
+    val moshi = Moshi.Builder()
         .add(ItemType::class.java, ItemTypeAdapter)
         .add(KotlinJsonAdapterFactory())
         .build()
@@ -32,14 +31,9 @@ object NetworkFactory {
             .build()
     }
 
-    private fun createHackerNewsApi(baseUrl: String): HackerNewsApi {
+    fun createHackerNewsApi(baseUrl: String): HackerNewsApi {
         val client = createOkHttpClient()
         val retrofit = createRetrofit(client, baseUrl)
         return retrofit.create(HackerNewsApi::class.java)
-    }
-
-    fun createHackerNewsRepository(baseUrl: String): HackerNewsRepository {
-        val api = createHackerNewsApi(baseUrl)
-        return HackerNewsRepository(api)
     }
 }

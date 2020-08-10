@@ -1,5 +1,6 @@
 package com.example.pagingapplication.services.network.hackernews
 
+import com.example.pagingapplication.model.ItemType
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter

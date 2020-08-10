@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.pagingapplication.PagingApplication
 import com.example.pagingapplication.R
+import com.example.pagingapplication.services.database.DatabaseFactory
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.collectLatest
@@ -27,8 +28,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     }
     private val viewModel: MainViewModel by viewModels {
         MainViewModel.Factory(
-            (application as PagingApplication).serviceContainer.repository
-        ) 
+            (application as PagingApplication).serviceContainer.repository,
+            // I've seen worse ways to get the database instance
+            DatabaseFactory.getDatabase(applicationContext)
+        )
     }
 
     @ExperimentalPagingApi
@@ -73,7 +76,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
         }.launchIn(lifecycleScope)
 
-        viewModel.topStoriesFlow.map { data ->
+        viewModel.topStoriesDatabaseFlow.map { data ->
             adapter.submitData(data)
         }.launchIn(lifecycleScope)
     }

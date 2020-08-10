@@ -8,8 +8,8 @@ import androidx.paging.PagingDataAdapter
 import androidx.paging.PagingSource
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pagingapplication.R
-import com.example.pagingapplication.services.network.hackernews.HackerNews
-import com.example.pagingapplication.services.network.hackernews.HackerNewsStoryDiffer
+import com.example.pagingapplication.model.HackerNews
+import com.example.pagingapplication.utils.HackerNewsStoryDiffer
 import com.example.pagingapplication.utils.inflate
 import java.text.SimpleDateFormat
 import java.util.Date

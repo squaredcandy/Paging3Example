@@ -1,4 +1,4 @@
-package com.example.pagingapplication.services.network.hackernews
+package com.example.pagingapplication.model
 
 enum class ItemType(val jsonKey: String) {
     Job("job"),

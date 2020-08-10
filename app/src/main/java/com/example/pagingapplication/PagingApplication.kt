@@ -2,14 +2,18 @@ package com.example.pagingapplication
 
 import android.app.Application
 import com.example.pagingapplication.services.ServiceContainer
-import com.example.pagingapplication.services.network.NetworkFactory
+import com.example.pagingapplication.services.hackernews.HackerNewsFactory
 
 class PagingApplication : Application() {
 
     private val baseUrl = "https://hacker-news.firebaseio.com/"
-    val serviceContainer: ServiceContainer by lazy {
-        ServiceContainer(
-            NetworkFactory.createHackerNewsRepository(baseUrl)
+    lateinit var serviceContainer: ServiceContainer
+
+    override fun onCreate() {
+        super.onCreate()
+        serviceContainer = ServiceContainer(
+            HackerNewsFactory.createCachedHackerNewsRepository(this, baseUrl)
+//            HackerNewsFactory.createHackerNewsRepository(baseUrl)
         )
     }
 }
