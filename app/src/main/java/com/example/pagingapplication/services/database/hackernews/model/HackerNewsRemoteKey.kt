@@ -1,8 +1,8 @@
 package com.example.pagingapplication.services.database.hackernews.model
 
+import androidx.paging.RemoteMediator
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.paging.RemoteMediator
 
 /**
  * Since the [RemoteMediator] doesn't handle the paging well, we handle it ourselves

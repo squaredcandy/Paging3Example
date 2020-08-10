@@ -1,8 +1,8 @@
 package com.example.pagingapplication.services.network
 
-import com.example.pagingapplication.services.network.hackernews.api.HackerNewsApi
 import com.example.pagingapplication.model.ItemType
 import com.example.pagingapplication.services.network.adapters.ItemTypeAdapter
+import com.example.pagingapplication.services.network.hackernews.api.HackerNewsApi
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
@@ -13,7 +13,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 object NetworkFactory {
 
     val moshi = Moshi.Builder()
-        .add(ItemType::class.java,
+        .add(
+            ItemType::class.java,
             ItemTypeAdapter
         )
         .add(KotlinJsonAdapterFactory())
@@ -21,7 +22,9 @@ object NetworkFactory {
 
     private fun createOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(HttpLoggingInterceptor().apply { this.level = HttpLoggingInterceptor.Level.BODY })
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                this.level = HttpLoggingInterceptor.Level.BODY
+            })
             .build()
     }
 

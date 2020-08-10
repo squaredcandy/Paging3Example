@@ -8,15 +8,18 @@ import com.example.pagingapplication.services.database.hackernews.dao.HackerNews
 object DatabaseFactory {
 
     private const val DATABASE_NAME = "database.db"
-    @Volatile private var instance: HackerNewsDatabase? = null
+    @Volatile
+    private var instance: HackerNewsDatabase? = null
 
     fun getDatabase(applicationContext: Context): HackerNewsDatabase {
         return instance ?: synchronized(this) {
-            instance ?: buildDatabase(applicationContext) .also { instance = it }
+            instance ?: buildDatabase(applicationContext).also { instance = it }
         }
     }
+
     private fun buildDatabase(applicationContext: Context): HackerNewsDatabase =
-        Room.databaseBuilder(applicationContext, HackerNewsDatabase::class.java, DATABASE_NAME).build()
+        Room.databaseBuilder(applicationContext, HackerNewsDatabase::class.java, DATABASE_NAME)
+            .build()
 
     fun getHackerNewsDao(applicationContext: Context): HackerNewsDao {
         return getDatabase(applicationContext).hackerNewsDao()

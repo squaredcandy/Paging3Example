@@ -32,7 +32,7 @@ class HackerNewsTopStoriesRemoteMediator(
          */
         val remoteKey = remoteKeyDao.getHackerNewsRemoteKey(TOP_STORIES_INDEX) ?: createNewRemoteKey()
 
-        val page: Int = when(loadType) {
+        val page: Int = when (loadType) {
             /**
              * If we are refreshing we are most likely trying to load the first page
              */
@@ -58,12 +58,12 @@ class HackerNewsTopStoriesRemoteMediator(
         val itemIdsToLoad = remoteKey.itemIds.subList(startIndex, endIndex)
         val items = itemIdsToLoad.map { itemDao.getItem(it) ?: api.getItem(it) }
         val newRemoteKey = remoteKey.copy(
-            prevKey = if((page - 1) * loadSize >= 0) page - 1 else null,
-            nextKey = if((page + 2) * loadSize < remoteKey.itemIds.lastIndex) page + 1 else null
+            prevKey = if ((page - 1) * loadSize >= 0) page - 1 else null,
+            nextKey = if ((page + 2) * loadSize < remoteKey.itemIds.lastIndex) page + 1 else null
         )
 
         hackerNewsDatabase.withTransaction {
-            if(loadType == LoadType.REFRESH) {
+            if (loadType == LoadType.REFRESH) {
                 createNewRemoteKey()
             }
 

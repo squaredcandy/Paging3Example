@@ -16,7 +16,8 @@ sealed class HackerNews(open val id: Int, val type: ItemType) {
         val url: String? = null,
         val dead: Boolean = false,
         val deleted: Boolean = false
-    ): HackerNews(id,
+    ) : HackerNews(
+        id,
         ItemType.Story
     )
 
@@ -29,7 +30,8 @@ sealed class HackerNews(open val id: Int, val type: ItemType) {
         val time: Long,
         val dead: Boolean = false,
         val deleted: Boolean = false
-    ): HackerNews(id,
+    ) : HackerNews(
+        id,
         ItemType.Comment
     )
 
@@ -43,7 +45,8 @@ sealed class HackerNews(open val id: Int, val type: ItemType) {
         val url: String? = null,
         val dead: Boolean = false,
         val deleted: Boolean = false
-    ): HackerNews(id,
+    ) : HackerNews(
+        id,
         ItemType.Job
     )
 
@@ -59,7 +62,8 @@ sealed class HackerNews(open val id: Int, val type: ItemType) {
         val title: String,
         val dead: Boolean = false,
         val deleted: Boolean = false
-    ): HackerNews(id,
+    ) : HackerNews(
+        id,
         ItemType.Poll
     )
 
@@ -72,13 +76,14 @@ sealed class HackerNews(open val id: Int, val type: ItemType) {
         val time: Long,
         val dead: Boolean = false,
         val deleted: Boolean = false
-    ): HackerNews(id,
+    ) : HackerNews(
+        id,
         ItemType.PollOpt
     )
 }
 
 fun HackerNewsItemResult.toHackerNewsItem(): HackerNews {
-    return when(itemType) {
+    return when (itemType) {
         ItemType.Job -> {
             HackerNews.Job(
                 by ?: "Anon",

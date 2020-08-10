@@ -14,7 +14,6 @@ import com.example.pagingapplication.PagingApplication
 import com.example.pagingapplication.R
 import com.example.pagingapplication.adapters.HackerNewsAdapter
 import com.example.pagingapplication.adapters.HackerNewsFooterAdapter
-import com.example.pagingapplication.services.database.DatabaseFactory
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
@@ -57,7 +56,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
          * can update accordingly.
          */
         adapter.loadStateFlow.map {
-            when(val currentState = it.refresh) {
+            when (val currentState = it.refresh) {
                 is LoadState.NotLoading -> {
                     refreshLayout.isRefreshing = false
                 }

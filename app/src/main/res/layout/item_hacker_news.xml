@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/hacker_news_item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:contentPadding="16dp"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    app:contentPadding="16dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,21 +17,21 @@
             android:id="@+id/hacker_news_item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?textAppearanceHeadline5"
-            android:singleLine="true"
-            android:maxLines="1"
             android:ellipsize="end"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textAppearance="?textAppearanceHeadline5"
             tools:text="Title" />
 
         <TextView
             android:id="@+id/hacker_news_item_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?textAppearanceSubtitle2"
-            android:singleLine="true"
-            android:maxLines="1"
             android:ellipsize="end"
-            tools:text="Posted by Author on Date"/>
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textAppearance="?textAppearanceSubtitle2"
+            tools:text="Posted by Author on Date" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,15 +43,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?textAppearanceCaption"
-                tools:text="Score: 15"/>
+                tools:text="Score: 15" />
 
             <TextView
                 android:id="@+id/hacker_news_item_comments"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?textAppearanceCaption"
                 android:layout_marginStart="8dp"
-                tools:text="Comments: 2"/>
+                android:textAppearance="?textAppearanceCaption"
+                tools:text="Comments: 2" />
         </LinearLayout>
 
     </LinearLayout>

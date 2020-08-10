@@ -16,7 +16,7 @@ import com.example.pagingapplication.utils.inflate
 class HackerNewsFooterAdapter(
     private val retry: () -> Unit
 ) : LoadStateAdapter<HackerNewsFooterAdapter.ViewHolder>() {
-    sealed class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    sealed class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         class Loading(view: View) : ViewHolder(view)
         class Error(view: View, retry: () -> Unit) : ViewHolder(view) {
             private val button: Button = view.findViewById(R.id.hacker_news_placeholder_button)
@@ -33,8 +33,9 @@ class HackerNewsFooterAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, loadState: LoadState) {
-        when(holder) {
-            is ViewHolder.Loading -> {}
+        when (holder) {
+            is ViewHolder.Loading -> {
+            }
             is ViewHolder.Error -> {
                 holder.bind(loadState)
             }
@@ -42,7 +43,7 @@ class HackerNewsFooterAdapter(
     }
 
     override fun getStateViewType(loadState: LoadState): Int {
-        return when(loadState) {
+        return when (loadState) {
             is LoadState.NotLoading -> R.layout.item_hacker_news_placeholder_loading
             LoadState.Loading -> R.layout.item_hacker_news_placeholder_loading
             is LoadState.Error -> R.layout.item_hacker_news_placeholder_error
@@ -51,7 +52,7 @@ class HackerNewsFooterAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, loadState: LoadState): ViewHolder {
         val view = parent.inflate(getStateViewType(loadState), false)
-        return when(loadState) {
+        return when (loadState) {
             is LoadState.NotLoading -> throw IllegalStateException()
             LoadState.Loading -> ViewHolder.Loading(
                 view

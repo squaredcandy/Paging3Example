@@ -10,6 +10,7 @@ object ItemTypeAdapter : JsonAdapter<ItemType>() {
         val str = reader.nextString()
         return ItemType.valueOf(str)
     }
+
     override fun toJson(writer: JsonWriter, value: ItemType?) {
         writer.value(value?.jsonKey)
     }

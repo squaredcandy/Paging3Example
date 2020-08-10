@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit
  * contains methods automatically poll more data from the [PagingSource] as well as methods to
  * monitor the state of the [PagingSource].
  */
-class HackerNewsAdapter: PagingDataAdapter<HackerNews.Story, HackerNewsAdapter.ViewHolder>(
+class HackerNewsAdapter : PagingDataAdapter<HackerNews.Story, HackerNewsAdapter.ViewHolder>(
     HackerNewsStoryDiffer
 ) {
 
@@ -80,7 +80,7 @@ class HackerNewsAdapter: PagingDataAdapter<HackerNews.Story, HackerNewsAdapter.V
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        if(item != null) {
+        if (item != null) {
             holder.bind(item)
         } else {
             holder.bindPlaceholder()
